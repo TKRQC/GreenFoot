@@ -1,0 +1,59 @@
+import greenfoot.*;
+import java.lang.*;
+import java.math.*;
+import java.*;
+
+public class alligator extends Actor
+{
+    public int foodEaten;
+    public int foodWin;
+    public void food(){
+        foodEaten = 0;
+    }
+    public void act() 
+    {
+        foodWin = 6;
+        int x = 40;
+        int y = (int)(Math.random()* x+20);
+        if (isTouching(food.class)){
+            removeTouching(food.class);
+            Greenfoot.playSound("eat.mp3");
+            foodEaten = foodEaten + 1;
+        }
+        else if(isAtEdge()){
+            turn(y);
+            move(25);
+            x++;
+        }
+        else{
+            move(20);
+        }
+        if(Greenfoot.isKeyDown("up")){
+            setRotation(270);
+        }
+        if(Greenfoot.isKeyDown("down")){
+            setRotation(90);
+        }
+        if(Greenfoot.isKeyDown("left")){
+            setRotation(180);
+        }
+        if(Greenfoot.isKeyDown("right")){
+            setRotation(0);
+        }
+        if(foodEaten == foodWin){
+            Greenfoot.playSound("gameOver.mp3");
+            getWorld().setBackground("gameOver.png");
+            setImage("death.png");
+        }
+    }
+    public boolean isTouch(boolean actor){
+        if (isTouching(alligator.class) || isTouching(food.class)) return true;
+        else{
+            return false;
+        }
+    }
+    public boolean isAtBoundry(boolean actor){
+        if (isAtEdge()) return true;
+        return false;
+    }
+}
